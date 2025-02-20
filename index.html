@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz z kwasów karboksylowych</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let table = document.getElementById("quizTable");
+            let inputs = [];
+            
+            for (let i = 1; i < table.rows.length; i++) { 
+                let cells = table.rows[i].cells;
+                let filledIndex = Math.floor(Math.random() * 3); // Wybór jednej podanej wartości
+                
+                for (let j = 0; j < cells.length; j++) {
+                    if (j !== filledIndex) {
+                        let correctValue = cells[j].innerText;
+                        let input = document.createElement("input");
+                        input.setAttribute("type", "text");
+                        input.setAttribute("data-correct", correctValue);
+                        cells[j].innerText = "";
+                        cells[j].appendChild(input);
+                        inputs.push(input);
+                    }
+                }
+            }
+            
+            document.getElementById("checkAnswers").addEventListener("click", function () {
+                let score = 0;
+                inputs.forEach(input => {
+                    let userValue = input.value.trim().toUpperCase(); // Konwersja do wielkich liter
+                    let correctValue = input.getAttribute("data-correct").toUpperCase();
+                    
+                    if (userValue === correctValue) {
+                        input.style.backgroundColor = "lightgreen";
+                        score++;
+                    } else {
+                        input.style.backgroundColor = "salmon";
+                    }
+                });
+                alert("Twój wynik: " + score + " / " + inputs.length);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Quiz z kwasów karboksylowych</h2>
+    <table border="1" id="quizTable">
+        <tr>
+            <th>Wzór sumaryczny</th>
+            <th>Nazwa systematyczna</th>
+            <th>Nazwa zwyczajowa</th>
+        </tr>
+        <tr><td>HCOOH</td><td>kwas metanowy</td><td>kwas mrówkowy</td></tr>
+        <tr><td>CH3COOH</td><td>kwas etanowy</td><td>kwas octowy</td></tr>
+        <tr><td>C2H5COOH</td><td>kwas propanowy</td><td>kwas propionowy</td></tr>
+        <tr><td>C3H7COOH</td><td>kwas butanowy</td><td>kwas masłowy</td></tr>
+        <tr><td>C4H9COOH</td><td>kwas pentanowy</td><td>kwas walerianowy</td></tr>
+        <tr><td>C5H11COOH</td><td>kwas heksanowy</td><td>kwas kapronowy</td></tr>
+        <tr><td>C6H13COOH</td><td>kwas heptanowy</td><td>kwas enantowy</td></tr>
+        <tr><td>C7H15COOH</td><td>kwas oktanowy</td><td>kwas kaprylowy</td></tr>
+        <tr><td>C8H17COOH</td><td>kwas nonanowy</td><td>kwas pelargonowy</td></tr>
+        <tr><td>C9H19COOH</td><td>kwas dekanowy</td><td>kwas kaprynowy</td></tr>
+    </table>
+    <br>
+    <button id="checkAnswers">Sprawdź odpowiedzi</button>
+</body>
+</html>
